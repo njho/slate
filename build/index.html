@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;javascript&quot;,&quot;shell&quot;,&quot;python&quot;,&quot;ruby&quot;]">
+  <body class="index" data-languages="[&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,9 +212,6 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="javascript">javascript</a>
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="ruby">ruby</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -225,10 +222,18 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#general-request-structure" class="toc-h1 toc-link" data-title="General Request Structure">General Request Structure</a>
+            <a href="#general-api-request-structure" class="toc-h1 toc-link" data-title="General API Request Structure">General API Request Structure</a>
           </li>
           <li>
-            <a href="#todo-gifty-campaign-creation" class="toc-h1 toc-link" data-title="TODO: Gifty Campaign Creation">TODO: Gifty Campaign Creation</a>
+            <a href="#console-endpoints" class="toc-h1 toc-link" data-title="Console Endpoints">Console Endpoints</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#todo-new-user-registration" class="toc-h2 toc-link" data-title="Console Endpoints">TODO: New User Registration</a>
+                  </li>
+                  <li>
+                    <a href="#todo-gifty-campaign-creation" class="toc-h2 toc-link" data-title="Console Endpoints">TODO: Gifty Campaign Creation</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#do-not-use-kittens" class="toc-h1 toc-link" data-title="DO NOT USE/Kittens">DO NOT USE/Kittens</a>
@@ -260,7 +265,7 @@
 <p>Welcome to the Gifty API! You can use our API to access Gifty API endpoints.</p>
 
 <p>This example API documentation page was created with <a href="https://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='general-request-structure'>General Request Structure</h1>
+<h1 id='general-api-request-structure'>General API Request Structure</h1>
 <blockquote>
 <p>Gifty has a single endpoint for all requests. Contains following information. </p>
 </blockquote>
@@ -304,10 +309,107 @@
 <aside class="notice">
 You must include all parameters to ensure a successful response.
 </aside>
-<h1 id='todo-gifty-campaign-creation'>TODO: Gifty Campaign Creation</h1><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+
+<aside class="success">
+Server will need to respond with all parameters to ensure console compliance.
+</aside>
+<h1 id='console-endpoints'>Console Endpoints</h1><h2 id='todo-new-user-registration'>TODO: New User Registration</h2>
+<blockquote>
+<p>This is the JSON sent to `api/v1/requests:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"console_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"create_console"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"wait_for_response_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/users/[user_uid]"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Assign a newly registered <strong>user</strong> a <strong>console_id</strong></p>
+
+<p>A new user registration should AUTOMATICALLY trigger the required response.
+The <code>create_console</code> will be available as an additional convenience API call.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>console_id</td>
+<td>The console_id that contains all information specific to campaign</td>
+</tr>
+<tr>
+<td>type</td>
+<td>create_console</td>
+</tr>
+<tr>
+<td>wait_for_response_at</td>
+<td>/users/[user_uid]</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>/users</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">...</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"[user_uid]"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[console_id]"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='server-response'>Server Response</h3>
+<blockquote>
+<p>DEFAULT_CONSOLE_JSON</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"active_campaigns"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"[default_campaign_uid]"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"agreements"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"[default_agreement_uid]"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"campaigns"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">                         </span><span class="err">/*This</span><span class="w"> </span><span class="err">holds</span><span class="w"> </span><span class="err">ALL</span><span class="w"> </span><span class="err">campaigns</span><span class="w"> </span><span class="err">related</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">console_id*/</span><span class="w">
+    </span><span class="s2">"[default_campaign_uid]"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> 
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"console_creation_date"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1498869747</span><span class="p">],</span><span class="w"> </span><span class="err">/*Unix</span><span class="w"> </span><span class="err">Time</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">console</span><span class="w"> </span><span class="err">creation*/</span><span class="w">
+  </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Console One"</span><span class="p">,</span><span class="w">                 </span><span class="err">/*Name</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">displayed</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">Console</span><span class="w"> </span><span class="err">Sidebar.</span><span class="w"> </span><span class="err">Input</span><span class="w"> </span><span class="err">yet</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">determined*/</span><span class="w">
+  </span><span class="s2">"notifications"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"key"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"payment"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"balance"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"cad"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"cents"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"console_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"unique_console_id"</span><span class="p">]</span><span class="w">   </span><span class="err">/*Matches</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">console_id</span><span class="w"> </span><span class="err">which</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">nested</span><span class="w"> </span><span class="err">in.</span><span class="w"> </span><span class="err">Facilitates</span><span class="w"> </span><span class="err">dashboard</span><span class="w"> </span><span class="err">queries*/</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<table><thead>
+<tr>
+<th>Write Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>/users/</td>
+<td>{..., [user_uid]: &quot;[console_id]&quot; } <br> Assigns the console to the user.</td>
+</tr>
+<tr>
+<td>/consoles/[console_id]</td>
+<td>{DEFAULT_CONSOLE_JSON} <br> Contains minimum requirements for console. Server will assign a [default_agreement_uid] and [default_campaign_uid]</td>
+</tr>
+</tbody></table>
+<h2 id='todo-gifty-campaign-creation'>TODO: Gifty Campaign Creation</h2>
+<blockquote>
+<p>This is the JSON sent to `api/v1/requests:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"console_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[console_id]"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"create_campaign"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"wait_for_response_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/consoles/[console_id]/campaigns"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"wait_for_response_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/consoles/[console_id]/campaigns/[campaign_uid]"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bundle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[campaign_name]"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[email or phone]"</span><span class="w">
@@ -316,11 +418,78 @@ You must include all parameters to ensure a successful response.
 </span></code></pre>
 <p>Create a new campaign of type <strong>email</strong> or <strong>phone</strong> that is assigned to a <strong>console</strong>:</p>
 
-<p><code>Authorization: meowmeowmeow</code></p>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>console_id</td>
+<td>The console_id that contains all information specific to campaign</td>
+</tr>
+<tr>
+<td>type</td>
+<td>create_campaign</td>
+</tr>
+<tr>
+<td>wait_for_response_at</td>
+<td>/consoles/[console_id]/campaigns/[campaign_uid]</td>
+</tr>
+<tr>
+<td>bundle</td>
+<td>Name: Campaign Name, type: email/phone</td>
+</tr>
+</tbody></table>
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+<p>**Note: Future changes will allow ability for type email AND phone.</p>
+
+<blockquote>
+<p>Data written to [console_id]/active_campaigns</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">...</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"[campaign_uid]"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> 
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Data written to [console_id]/campaigns </p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">...</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"[campaign_uid]"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> 
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>DEFAULT_CAMPAIGN_JSON</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"campaign_types"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"email"</span><span class="w"> </span><span class="p">]</span><span class="w">   
+  </span><span class="err">//IMPORTANT!</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">an</span><span class="w"> </span><span class="err">ARRAY</span><span class="w"> </span><span class="err">(IE.</span><span class="w"> </span><span class="p">[</span><span class="s2">"email"</span><span class="p">,</span><span class="w"> </span><span class="s2">"phone"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"phone"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"email"</span><span class="p">]</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">VALID)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='server-response-2'>Server Response</h3>
+<table><thead>
+<tr>
+<th>Write Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[console_id]/active_campaigns</td>
+<td>{..., [campaign_uid]: true } <br> Informs console that <code>new campaign</code> is <code>active</code> ** MAY BE REDUNDANT</td>
+</tr>
+<tr>
+<td>[console_id]/campaigns</td>
+<td>{..., [campaign_uid]: true }  <br>  List of all campaigns - active or inactive ** MAY BE REDUNDANT</td>
+</tr>
+<tr>
+<td>campaigns/[campaign_uid]</td>
+<td>{[DEFAULT_CAMPAIGN_JSON}  <br>  Initialize the campaign with default campaign Meta</td>
+</tr>
+</tbody></table>
 <h1 id='do-not-use-kittens'>DO NOT USE/Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
 <span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
@@ -525,9 +694,6 @@ Remember — a happy kitten is an authenticated kitten!
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="javascript">javascript</a>
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="ruby">ruby</a>
           </div>
       </div>
     </div>
