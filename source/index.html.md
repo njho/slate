@@ -2,10 +2,11 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
+
   - javascript
+  - shell
+  - python
+  - ruby
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -19,13 +20,59 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Welcome to the Gifty API! You can use our API to access Gifty API endpoints.
 
 This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
-# Authentication
+# General Request Structure
+
+> Gifty has a single endpoint for all requests. Contains following information. 
+
+
+```json
+{
+  "console_id": "[console id information]",
+  "type": "[request type]",
+  "wait_for_response_at": "[e.g. -J186Gs889iH_s]",
+  "bundle": {
+      "[extra_information]": "[email/phone]"
+    }
+}
+```
+
+Gifty has a single endpoint which contains all information necessary for the server to respond appropriately.
+
+Requests are written to `https://ip-gifty-staging.firebaseio.com/` + `api/v1/requests/[unique_key]` containing the appropriate information.
+
+
+<aside class="notice">
+You must include all parameters to ensure a successful response.
+</aside>
+
+# TODO: Gifty Campaign Creation
+
+> To authorize, use this code:
+
+
+```javascript
+const kittn = require('kittn');
+
+let api = kittn.authorize('meowmeowmeow');
+```
+
+> Make sure to replace `meowmeowmeow` with your API key.
+
+Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+
+Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+
+`Authorization: meowmeowmeow`
+
+<aside class="notice">
+You must replace <code>meowmeowmeow</code> with your personal API key.
+</aside>
+
+# DO NOT USE/Authentication
 
 > To authorize, use this code:
 
@@ -65,7 +112,7 @@ Kittn expects for the API key to be included in all API requests to the server i
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
-# Kittens
+# DO NOT USE/Kittens
 
 ## Get All Kittens
 
