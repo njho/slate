@@ -4,9 +4,6 @@ title: API Reference
 language_tabs: # must be one of https://git.io/vQNgJ
 
   - javascript
-  - shell
-  - python
-  - ruby
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -24,7 +21,7 @@ Welcome to the Gifty API! You can use our API to access Gifty API endpoints.
 
 This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
-# General Request Structure
+# General API Request Structure
 
 > Gifty has a single endpoint for all requests. Contains following information. 
 
@@ -54,14 +51,97 @@ bundle | Extraneous information associated with request `type`
 <aside class="notice">
 You must include all parameters to ensure a successful response.
 </aside>
+<aside class="success">
+Server will need to respond with all parameters to ensure console compliance.
+</aside>
 
-# TODO: Gifty Campaign Creation
+
+# Console Endpoints
+
+## TODO: New User Registration
+
+ > This is the JSON sent to `api/v1/requests:
+
+```json
+{
+  "console_id": null,
+  "type": "create_console",
+  "wait_for_response_at": "/users/[user_uid]"
+}
+```
+
+Assign a newly registered **user** a **console_id**
+
+A new user registration should AUTOMATICALLY trigger the required response.
+The `create_console` will be available as an additional convenience API call.
+
+
+Parameter | Description
+--------- | -----------
+console_id | The console_id that contains all information specific to campaign
+type | create_console
+wait_for_response_at | /users/[user_uid]
+
+
+>/users
+
+```json
+{
+  ...,
+  "[user_uid]": "[console_id]"
+}
+
+```
+###Server Response
+
+>DEFAULT_CONSOLE_JSON
+
+```json
+{
+  "active_campaigns" : {
+    "[default_campaign_uid]" : true
+  },
+  "agreements" : {
+    "[default_agreement_uid]" : true
+  },
+  "campaigns" : {                         /*This holds ALL campaigns related to this console_id*/
+    "[default_campaign_uid]" : true 
+  },
+  "console_creation_date" : [1498869747], /*Unix Time of console creation*/
+  "name" : "Console One",                 /*Name to be displayed in Console Sidebar. Input yet to be determined*/
+  "notifications" : {
+    "key" : "timestamp"
+  },
+  "payment" : {
+    "balance" : {
+      "cad" : {
+        "cents" : 0
+      },
+      "token": null
+    }
+  },
+  "console_id" : ["unique_console_id"]   /*Matches the console_id which this data is nested in. Facilitates dashboard queries*/
+}
+
+```
+
+Write Location | Description
+--------- | -----------
+/users/ |  {..., [user_uid]: "[console_id]" } <br> Assigns the console to the user.
+/consoles/[console_id] | {DEFAULT_CONSOLE_JSON} <br> Contains minimum requirements for console. Server will assign a [default_agreement_uid] and [default_campaign_uid]
+
+
+## TODO: Gifty Campaign Creation 
+
+
+
+ > This is the JSON sent to `api/v1/requests:
 
 ```json
 {
   "console_id": "[console_id]",
   "type": "create_campaign",
-  "wait_for_response_at": "/consoles/[console_id]/campaigns",
+  "wait_for_response_at": "/consoles/[console_id]/campaigns/[campaign_uid]",
   "bundle": {
       "name": "[campaign_name]",
       "type": "[email or phone]"
@@ -71,13 +151,51 @@ You must include all parameters to ensure a successful response.
 
 Create a new campaign of type **email** or **phone** that is assigned to a **console**:
 
+Parameter | Description
+--------- | -----------
+console_id | The console_id that contains all information specific to campaign
+type | create_campaign
+wait_for_response_at | /consoles/[console_id]/campaigns/[campaign_uid]
+bundle | Name: Campaign Name, type: email/phone
 
-`Authorization: meowmeowmeow`
+**Note: Future changes will allow ability for type email AND phone.
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+>Data written to [console_id]/active_campaigns
 
+```json
+{
+  ...,
+  "[campaign_uid]": true 
+}
+
+```
+>Data written to [console_id]/campaigns 
+
+```json
+{
+  ...,
+  "[campaign_uid]": true 
+}
+
+```
+
+>DEFAULT_CAMPAIGN_JSON
+
+```json
+{
+  "campaign_types" : [ "email" ]   
+  //IMPORTANT! This is an ARRAY (IE. ["email", "phone"], ["phone"], ["email"] are VALID)
+}
+
+```
+
+###Server Response
+
+Write Location | Description
+--------- | -----------
+[console_id]/active_campaigns|  {..., [campaign_uid]: true } <br> Informs console that `new campaign` is `active` ** MAY BE REDUNDANT
+[console_id]/campaigns  | {..., [campaign_uid]: true }  <br>  List of all campaigns - active or inactive ** MAY BE REDUNDANT
+campaigns/[campaign_uid] | {[DEFAULT_CAMPAIGN_JSON}  <br>  Initialize the campaign with default campaign Meta
 
 
 
