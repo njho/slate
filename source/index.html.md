@@ -45,7 +45,7 @@ Parameter | Description
 --------- | -----------
 console_id | The console_id that contains all information specific to campaign
 type | Type of request (ie. `create_campaign`)
-wait_for_response_at | Informs API where to write information to in database
+wait_for_response_at | Tells the server where to leave its response (i.e. /users/[user_uid]/`[unique_key]`/)
 bundle | Extraneous information associated with request `type`
 
 <aside class="notice">
