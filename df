@@ -1,0 +1,35 @@
+[33mcommit bdb693031027c2e5af77cb709cb86836c3e2e74c[m
+Author: Alejandro Aguirre <presaguirre@gmail.com>
+Date:   Mon Jul 17 21:31:24 2017 -0600
+
+    Update_errors.md (#815)
+    
+    Adding some punctuation marks.
+
+[1mdiff --git a/source/includes/_errors.md b/source/includes/_errors.md[m
+[1mindex 267e352..86c8301 100644[m
+[1m--- a/source/includes/_errors.md[m
+[1m+++ b/source/includes/_errors.md[m
+[36m@@ -7,14 +7,14 @@[m [mThe Kittn API uses the following error codes:[m
+ [m
+ Error Code | Meaning[m
+ ---------- | -------[m
+[31m-400 | Bad Request -- Your request sucks[m
+[31m-401 | Unauthorized -- Your API key is wrong[m
+[31m-403 | Forbidden -- The kitten requested is hidden for administrators only[m
+[31m-404 | Not Found -- The specified kitten could not be found[m
+[31m-405 | Method Not Allowed -- You tried to access a kitten with an invalid method[m
+[31m-406 | Not Acceptable -- You requested a format that isn't json[m
+[31m-410 | Gone -- The kitten requested has been removed from our servers[m
+[31m-418 | I'm a teapot[m
+[32m+[m[32m400 | Bad Request -- Your request sucks.[m
+[32m+[m[32m401 | Unauthorized -- Your API key is wrong.[m
+[32m+[m[32m403 | Forbidden -- The kitten requested is hidden for administrators only.[m
+[32m+[m[32m404 | Not Found -- The specified kitten could not be found.[m
+[32m+[m[32m405 | Method Not Allowed -- You tried to access a kitten with an invalid method.[m
+[32m+[m[32m406 | Not Acceptable -- You requested a format that isn't json.[m
+[32m+[m[32m410 | Gone -- The kitten requested has been removed from our servers.[m
+[32m+[m[32m418 | I'm a teapot.[m
+ 429 | Too Many Requests -- You're requesting too many kittens! Slow down![m
+ 500 | Internal Server Error -- We had a problem with our server. Try again later.[m
+ 503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.[m
