@@ -228,24 +228,22 @@
             <a href="#console-endpoints" class="toc-h1 toc-link" data-title="Console Endpoints">Console Endpoints</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#todo-new-user-registration" class="toc-h2 toc-link" data-title="Console Endpoints">TODO: New User Registration</a>
+                    <a href="#new-user-registration-create_console" class="toc-h2 toc-link" data-title="Console Endpoints">New User Registration (create_console)</a>
                   </li>
                   <li>
-                    <a href="#todo-gifty-campaign-creation" class="toc-h2 toc-link" data-title="Console Endpoints">TODO: Gifty Campaign Creation</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#do-not-use-kittens" class="toc-h1 toc-link" data-title="DO NOT USE/Kittens">DO NOT USE/Kittens</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="DO NOT USE/Kittens">Get All Kittens</a>
+                    <a href="#gifty-campaign-creation-create_campaign" class="toc-h2 toc-link" data-title="Console Endpoints">Gifty Campaign Creation (create_campaign)</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="DO NOT USE/Kittens">Get a Specific Kitten</a>
+                    <a href="#add-user-to-campaign-add_user" class="toc-h2 toc-link" data-title="Console Endpoints">Add User to Campaign (add_user)</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="DO NOT USE/Kittens">Delete a Specific Kitten</a>
+                    <a href="#delete-user-from-campaign-remove_campaign_user" class="toc-h2 toc-link" data-title="Console Endpoints">Delete User from Campaign (remove_campaign_user)</a>
+                  </li>
+                  <li>
+                    <a href="#default-campaign-gifty-assign_campaign_default" class="toc-h2 toc-link" data-title="Console Endpoints">Default Campaign Gifty(assign_campaign_default)</a>
+                  </li>
+                  <li>
+                    <a href="#update-gifty-update_gifty" class="toc-h2 toc-link" data-title="Console Endpoints">Update Gifty (update_gifty)</a>
                   </li>
               </ul>
           </li>
@@ -298,7 +296,7 @@
 </tr>
 <tr>
 <td>wait_for_response_at</td>
-<td>Informs API where to write information to in database</td>
+<td>Tells the server where to leave its response (i.e. /users/[user_uid]/<code>[unique_key]</code>/)</td>
 </tr>
 <tr>
 <td>bundle</td>
@@ -313,7 +311,7 @@ You must include all parameters to ensure a successful response.
 <aside class="success">
 Server will need to respond with all parameters to ensure console compliance.
 </aside>
-<h1 id='console-endpoints'>Console Endpoints</h1><h2 id='todo-new-user-registration'>TODO: New User Registration</h2>
+<h1 id='console-endpoints'>Console Endpoints</h1><h2 id='new-user-registration-create_console'>New User Registration (create_console)</h2>
 <blockquote>
 <p>This is the JSON sent to `api/v1/requests:</p>
 </blockquote>
@@ -349,7 +347,7 @@ The <code>create_console</code> will be available as an additional convenience A
 </tbody></table>
 
 <blockquote>
-<p>/users</p>
+<p>Server Response: /users</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="err">...</span><span class="p">,</span><span class="w">
@@ -402,7 +400,25 @@ The <code>create_console</code> will be available as an additional convenience A
 <td>{DEFAULT_CONSOLE_JSON} <br> Contains minimum requirements for console. Server will assign a [default_agreement_uid] and [default_campaign_uid]</td>
 </tr>
 </tbody></table>
-<h2 id='todo-gifty-campaign-creation'>TODO: Gifty Campaign Creation</h2>
+
+<p>The server will also need to initialize the <code>[default_campaign_uid]</code> with the following Params:</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>Your First Campaign!</td>
+</tr>
+<tr>
+<td>type</td>
+<td>email</td>
+</tr>
+</tbody></table>
+<h2 id='gifty-campaign-creation-create_campaign'>Gifty Campaign Creation (create_campaign)</h2>
 <blockquote>
 <p>This is the JSON sent to `api/v1/requests:</p>
 </blockquote>
@@ -466,8 +482,9 @@ The <code>create_console</code> will be available as an additional convenience A
 <p>DEFAULT_CAMPAIGN_JSON</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"[campaign_name]"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"campaign_types"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"email"</span><span class="w"> </span><span class="p">]</span><span class="w">   
-  </span><span class="err">//IMPORTANT!</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">an</span><span class="w"> </span><span class="err">ARRAY</span><span class="w"> </span><span class="err">(IE.</span><span class="w"> </span><span class="p">[</span><span class="s2">"email"</span><span class="p">,</span><span class="w"> </span><span class="s2">"phone"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"phone"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"email"</span><span class="p">]</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">VALID)</span><span class="w">
+  </span><span class="err">//IMPORTANT!</span><span class="w"> </span><span class="err">campaign_types</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">an</span><span class="w"> </span><span class="err">ARRAY</span><span class="w"> </span><span class="err">(IE.</span><span class="w"> </span><span class="p">[</span><span class="s2">"email"</span><span class="p">,</span><span class="w"> </span><span class="s2">"phone"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"phone"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"email"</span><span class="p">]</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">VALID)</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='server-response-2'>Server Response</h3>
@@ -490,99 +507,103 @@ The <code>create_console</code> will be available as an additional convenience A
 <td>{[DEFAULT_CAMPAIGN_JSON}  <br>  Initialize the campaign with default campaign Meta</td>
 </tr>
 </tbody></table>
-<h1 id='do-not-use-kittens'>DO NOT USE/Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
-</code></pre>
+<h2 id='add-user-to-campaign-add_user'>Add User to Campaign (add_user)</h2>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>This is the JSON sent to `api/v1/requests:</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"console_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[console_id]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"add_user"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"wait_for_response_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/campaigns/[campaign_uid]/[type]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bundle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[username]"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[email or phone]"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[email_address or phone_number]"</span><span class="p">,</span><span class="w"> </span><span class="err">//nj.ho@hotmail.com</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="mi">403-589-3536</span><span class="w">
+      </span><span class="s2">"campaign_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[campaign_uid]"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p>Adds a new user to a campaign.</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>console_id</td>
+<td>The console_id that contains all information specific to campaign</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>type</td>
+<td>add_user</td>
+</tr>
+<tr>
+<td>wait_for_response_at</td>
+<td>/campaigns/[campaign_uid]/[type]</td>
+</tr>
+<tr>
+<td>bundle</td>
+<td>Name: username, user_type: email or phone, value: email address or phone number, campaign_uid: campaign_uid</td>
 </tr>
 </tbody></table>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<blockquote>
+<p>Data written to /campaigns/[campaign_uid]/emails</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[username]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[email_address]"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Data written to /campaigns/[campaign_uid]/phone</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[username]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[phone_number]"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='server-response-3'>Server Response</h3>
+<table><thead>
+<tr>
+<th>Write Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>/campaigns/[campaign_uid]/emails</td>
+<td>{ &quot;name&quot;: [username], &quot;value&quot;: [email_address] }<br> Written to this location if <code>user_type: email</code></td>
+</tr>
+<tr>
+<td>/campaigns/[campaign_uid]/phone</td>
+<td>{ &quot;name&quot;: [username], &quot;value&quot;: [phone_number] }  <br>  Written to this location if <code>user_type: phone</code></td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Note that both /emails and /phone are both Arrays! Each user is an `Object` in an Array!
+ie. [{name, value}, {name, value}]
 </aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
+<h2 id='delete-user-from-campaign-remove_campaign_user'>Delete User from Campaign (remove_campaign_user)</h2>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>This is the JSON sent to `api/v1/requests:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="s2">"console_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[console_id]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"remove_campaign_user"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"wait_for_response_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/campaigns/[campaign_uid]/[type]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bundle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"user_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[email/phone]"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[key/index in /campaigns/[campaign_uid]/[type] to be removed]"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"campaign_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"campaign_uid"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+<p>Assigns a new user to a campaign.</p>
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -590,38 +611,60 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>console_id</td>
+<td>The console_id that contains all information specific to campaign</td>
+</tr>
+<tr>
+<td>type</td>
+<td>remove_campaign_user</td>
+</tr>
+<tr>
+<td>wait_for_response_at</td>
+<td>/campaigns/[campaign_uid]/[type]</td>
+</tr>
+<tr>
+<td>bundle</td>
+<td>Name: username, user_type: email or phone, campaign_uid: campaign_uid</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h3 id='server-response-4'>Server Response</h3>
+<table><thead>
+<tr>
+<th>Write Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>/campaigns/[campaign_uid]/emails</td>
+<td>Remove <code>[index]</code> from <code>Array</code> at endpoint</td>
+</tr>
+<tr>
+<td>/campaigns/[campaign_uid]/phone</td>
+<td>Remove <code>[index]</code> from <code>Array</code> at endpoint</td>
+</tr>
+</tbody></table>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
+<aside class="notice">
+Note that both /emails and /phone are both Arrays! Each user is an Object in an Array!
+ie. [{name, value}, {name, value}]
+</aside>
+<h2 id='default-campaign-gifty-assign_campaign_default'>Default Campaign Gifty(assign_campaign_default)</h2>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>This is the JSON sent to `api/v1/requests:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
+  </span><span class="s2">"console_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[console_id]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assign_campaign_default"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"wait_for_response_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/campaigns/[campaign_uid]/[default_email_gift or default_phone_value]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bundle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"campaign_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[campaign_uid]"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[default_email_gift/default_phone_value]"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[gifty_uid (type default_email_gift) or cents (default_phone_value)]"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
+<p>Assigns a <code>default_email_gift</code> or a <code>default_phone_value</code></p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -629,8 +672,102 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>console_id</td>
+<td>The console_id that contains all information specific to campaign</td>
+</tr>
+<tr>
+<td>type</td>
+<td>assign_campaign_default</td>
+</tr>
+<tr>
+<td>wait_for_response_at</td>
+<td>/campaigns/[campaign_uid]/[default_email_gift or default_phone_value]</td>
+</tr>
+<tr>
+<td>bundle</td>
+<td>campaign_uid: campaign_uid, type: [default_email_gift/default_phone_value], &quot;value&quot;: [gifty_uid (type default_email_gift] [cents (default_phone_value)]</td>
+</tr>
+</tbody></table>
+<h3 id='server-response-5'>Server Response</h3>
+<table><thead>
+<tr>
+<th>Write Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>/campaigns/[campaign_uid]/[default_email_gift]</td>
+<td>Update with <code>[gifty_uid]</code></td>
+</tr>
+<tr>
+<td>/campaigns/[campaign_uid]/[default_phone_value]</td>
+<td>Update with <code>[cents]</code></td>
+</tr>
+</tbody></table>
+<h2 id='update-gifty-update_gifty'>Update Gifty (update_gifty)</h2>
+<blockquote>
+<p>This is the JSON sent to `api/v1/requests:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"console_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[console_id]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update_gifty"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"wait_for_response_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/consoles/[console_id]/giftys/[gifty_uid]"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bundle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"gifty_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[gifty_id/null]"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="err">if</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">new</span><span class="w"> </span><span class="err">Gifty</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[new or update]"</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[gifty_object]"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">A</span><span class="w"> </span><span class="err">complete</span><span class="w"> </span><span class="err">Gifty</span><span class="w"> </span><span class="err">Object</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">yet</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">defined</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">point</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Updates an existing Gifty, or pushes a new Gifty Object.</p>
+
+<p>Type <code>new</code> will require server to <code>push</code> a new <em>Gifty Object</em> to the server.
+Type <code>update</code> will require server to update existing <em>Gifty Object</em>. </p>
+
+<p><strong>The Gifty Object must be updated at both /offers and in each /consoles/[console_id]/giftys/[gifty_uid]!</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>console_id</td>
+<td>The console_id that contains all information specific to campaign</td>
+</tr>
+<tr>
+<td>type</td>
+<td>update_gifty</td>
+</tr>
+<tr>
+<td>wait_for_response_at</td>
+<td>/consoles/[console_id]/giftys/[gifty_id]</td>
+</tr>
+<tr>
+<td>bundle</td>
+<td>gifty: gifty_id, type: [new/update] value: [gifty_object]</td>
+</tr>
+</tbody></table>
+
+<p><strong>Note: Gifty Object structure is yet to be determined. It will be very similar to what is existing</strong></p>
+<h3 id='server-response-6'>Server Response</h3>
+<p>if <code>bundle.type: new</code>, push Gifty Object.
+if <code>bundle.type: update</code> update Gifty Object.</p>
+
+<table><thead>
+<tr>
+<th>Write Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>/consoles/[console_id]/giftys/[gifty_id]</td>
+<td>Update/push with <code>[gifty_object]</code></td>
+</tr>
+<tr>
+<td>/offers/[gifty_id]</td>
+<td>Update/push with <code>[gifty_object]</code></td>
 </tr>
 </tbody></table>
 <h1 id='do-not-use-errors'>DO NOT USE/Errors</h1>

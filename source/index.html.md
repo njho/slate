@@ -58,7 +58,7 @@ Server will need to respond with all parameters to ensure console compliance.
 
 # Console Endpoints
 
-## TODO: New User Registration
+## New User Registration (create_console)
 
  > This is the JSON sent to `api/v1/requests:
 
@@ -83,7 +83,7 @@ type | create_console
 wait_for_response_at | /users/[user_uid]
 
 
->/users
+>Server Response: /users
 
 ```json
 {
@@ -130,10 +130,15 @@ Write Location | Description
 /users/ |  {..., [user_uid]: "[console_id]" } <br> Assigns the console to the user.
 /consoles/[console_id] | {DEFAULT_CONSOLE_JSON} <br> Contains minimum requirements for console. Server will assign a [default_agreement_uid] and [default_campaign_uid]
 
+The server will also need to initialize the `[default_campaign_uid]` with the following Params:
 
-## TODO: Gifty Campaign Creation 
+Parameter | Description
+--------- | -----------
+name | Your First Campaign!
+type | email
 
 
+## Gifty Campaign Creation (create_campaign)
 
  > This is the JSON sent to `api/v1/requests:
 
@@ -183,8 +188,9 @@ bundle | Name: Campaign Name, type: email/phone
 
 ```json
 {
+  "name" : "[campaign_name]",
   "campaign_types" : [ "email" ]   
-  //IMPORTANT! This is an ARRAY (IE. ["email", "phone"], ["phone"], ["email"] are VALID)
+  //IMPORTANT! campaign_types is an ARRAY (IE. ["email", "phone"], ["phone"], ["email"] are VALID)
 }
 
 ```
@@ -198,176 +204,180 @@ Write Location | Description
 campaigns/[campaign_uid] | {[DEFAULT_CAMPAIGN_JSON}  <br>  Initialize the campaign with default campaign Meta
 
 
+## Add User to Campaign (add_user)
 
-# DO NOT USE/Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
+ > This is the JSON sent to `api/v1/requests:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+  "console_id": "[console_id]",
+  "type": "add_user",
+  "wait_for_response_at": "/campaigns/[campaign_uid]/[type]",
+  "bundle": {
+      "name": "[username]",
+      "user_type": "[email or phone]",
+      "value": "[email_address or phone_number]", //nj.ho@hotmail.com or 403-589-3536
+      "campaign_uid": "[campaign_uid]"
+    }
+}
 ```
 
-This endpoint retrieves all kittens.
+Adds a new user to a campaign.
 
-### HTTP Request
+Parameter | Description
+--------- | -----------
+console_id | The console_id that contains all information specific to campaign
+type | add_user
+wait_for_response_at | /campaigns/[campaign_uid]/[type]
+bundle | Name: username, user_type: email or phone, value: email address or phone number, campaign_uid: campaign_uid
 
-`GET http://example.com/api/kittens`
 
-### Query Parameters
+>Data written to /campaigns/[campaign_uid]/emails
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+```json
+{
+  "name": "[username]",
+  "value": "[email_address]"
+}
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+```
+>Data written to /campaigns/[campaign_uid]/phone
+
+```json
+{
+  "name": "[username]",
+  "value": "[phone_number]"
+}
+
+```
+
+###Server Response
+
+Write Location | Description
+--------- | -----------
+/campaigns/[campaign_uid]/emails |  { "name": [username], "value": [email_address] }<br> Written to this location if `user_type: email`
+/campaigns/[campaign_uid]/phone | { "name": [username], "value": [phone_number] }  <br>  Written to this location if `user_type: phone`
+
+<aside class="notice">
+Note that both /emails and /phone are both Arrays! Each user is an `Object` in an Array!
+ie. [{name, value}, {name, value}]
 </aside>
 
-## Get a Specific Kitten
 
-```ruby
-require 'kittn'
+## Delete User from Campaign (remove_campaign_user)
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+ > This is the JSON sent to `api/v1/requests:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "console_id": "[console_id]",
+  "type": "remove_campaign_user",
+  "wait_for_response_at": "/campaigns/[campaign_uid]/[type]",
+  "bundle": {
+    "user_type": "[email/phone]",
+    "index": "[key/index in /campaigns/[campaign_uid]/[type] to be removed]",
+    "campaign_uid": "campaign_uid"
+    }
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
+Assigns a new user to a campaign.
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+console_id | The console_id that contains all information specific to campaign
+type | remove_campaign_user
+wait_for_response_at | /campaigns/[campaign_uid]/[type] 
+bundle | Name: username, user_type: email or phone, campaign_uid: campaign_uid
 
-## Delete a Specific Kitten
 
-```ruby
-require 'kittn'
+###Server Response
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
+Write Location | Description
+--------- | -----------
+/campaigns/[campaign_uid]/emails |  Remove `[index]` from `Array` at endpoint
+/campaigns/[campaign_uid]/phone | Remove `[index]` from `Array` at endpoint
 
-```python
-import kittn
+<aside class="notice">
+Note that both /emails and /phone are both Arrays! Each user is an Object in an Array!
+ie. [{name, value}, {name, value}]
+</aside>
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
 
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
+## Default Campaign Gifty(assign_campaign_default)
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
+ > This is the JSON sent to `api/v1/requests:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  "console_id": "[console_id]",
+  "type": "assign_campaign_default",
+  "wait_for_response_at": "/campaigns/[campaign_uid]/[default_email_gift or default_phone_value]",
+  "bundle": {
+    "campaign_uid": "[campaign_uid]",
+    "type": "[default_email_gift/default_phone_value]",
+    "value": "[gifty_uid (type default_email_gift) or cents (default_phone_value)]"
+    }
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
+Assigns a `default_email_gift` or a `default_phone_value`
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to delete
+console_id | The console_id that contains all information specific to campaign
+type | assign_campaign_default
+wait_for_response_at | /campaigns/[campaign_uid]/[default_email_gift or default_phone_value]
+bundle | campaign_uid: campaign_uid, type: [default_email_gift/default_phone_value], "value": [gifty_uid (type default_email_gift] [cents (default_phone_value)]
 
+
+###Server Response
+
+Write Location | Description
+--------- | -----------
+/campaigns/[campaign_uid]/[default_email_gift] |  Update with `[gifty_uid]`
+/campaigns/[campaign_uid]/[default_phone_value] | Update with `[cents]`
+
+## Update Gifty (update_gifty)
+
+ > This is the JSON sent to `api/v1/requests:
+
+```json
+{
+  "console_id": "[console_id]",
+  "type": "update_gifty",
+  "wait_for_response_at": "/consoles/[console_id]/giftys/[gifty_uid]",
+  "bundle": {
+    "gifty_id": "[gifty_id/null]", // null if is a new Gifty
+    "type": "[new or update]"
+    "value": "[gifty_object]" // A complete Gifty Object is yet to be defined at this point
+    }
+}
+```
+
+Updates an existing Gifty, or pushes a new Gifty Object.
+
+Type `new` will require server to `push` a new _Gifty Object_ to the server.
+Type `update` will require server to update existing _Gifty Object_. 
+
+**The Gifty Object must be updated at both /offers and in each /consoles/[console_id]/giftys/[gifty_uid]!**
+
+
+Parameter | Description
+--------- | -----------
+console_id | The console_id that contains all information specific to campaign
+type | update_gifty
+wait_for_response_at | /consoles/[console_id]/giftys/[gifty_id]
+bundle | gifty: gifty_id, type: [new/update] value: [gifty_object]
+
+**Note: Gifty Object structure is yet to be determined. It will be very similar to what is existing**
+
+
+###Server Response
+if `bundle.type: new`, push Gifty Object.
+if `bundle.type: update` update Gifty Object.
+
+Write Location | Description
+--------- | -----------
+/consoles/[console_id]/giftys/[gifty_id]|  Update/push with `[gifty_object]`
+/offers/[gifty_id] | Update/push with `[gifty_object]`
