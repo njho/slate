@@ -401,6 +401,17 @@ The <code>create_console</code> will be available as an additional convenience A
 </tr>
 </tbody></table>
 
+<blockquote>
+<p>Initialize the Default Campaign</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Your First Campaign!"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"campaign_types"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">   
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>The server will also need to initialize the <code>[default_campaign_uid]</code> with the following Params:</p>
 
 <table><thead>
@@ -414,8 +425,8 @@ The <code>create_console</code> will be available as an additional convenience A
 <td>Your First Campaign!</td>
 </tr>
 <tr>
-<td>type</td>
-<td>email</td>
+<td>campaign_types</td>
+<td>Initialize w/ type <code>{email: true, phone: false}</code></td>
 </tr>
 </tbody></table>
 <h2 id='gifty-campaign-creation-create_campaign'>Gifty Campaign Creation (create_campaign)</h2>
@@ -483,8 +494,10 @@ The <code>create_console</code> will be available as an additional convenience A
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"[campaign_name]"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"campaign_types"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"email"</span><span class="w"> </span><span class="p">]</span><span class="w">   
-  </span><span class="err">//IMPORTANT!</span><span class="w"> </span><span class="err">campaign_types</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">an</span><span class="w"> </span><span class="err">ARRAY</span><span class="w"> </span><span class="err">(IE.</span><span class="w"> </span><span class="p">[</span><span class="s2">"email"</span><span class="p">,</span><span class="w"> </span><span class="s2">"phone"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"phone"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"email"</span><span class="p">]</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">VALID)</span><span class="w">
+  </span><span class="s2">"campaign_types"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[boolean]"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[boolean"</span><span class="w">
+    </span><span class="p">}</span><span class="w">   
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='server-response-2'>Server Response</h3>
